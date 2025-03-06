@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('advice', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->string('result')->nullable();
+          
+            //Status
+            $table->unsignedBigInteger('status')->default(0);
+            $table->unsignedBigInteger('archive')->default(0);
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade'); 
             $table->timestamps();
         });
     }

@@ -1,11 +1,12 @@
 <?php
 
-use App\Models\User;
 use App\Models\Patient;
 use App\Models\PatientVisit;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\TestType;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -14,11 +15,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('medical_certificates', function (Blueprint $table) {
+        Schema::create('investigations', function (Blueprint $table) {
             $table->id();
-            $table->text('content')->nullable();
-            $table->string('finalized')->default(0)->comment('1=Yes, 2=No');
+
+            $table->string('stat')->nullable();
+            $table->string('ot_required')->nullable();
             $table->string('result')->nullable();
+            $table->foreignIdFor(TestType::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(Patient::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(PatientVisit::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(User::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
@@ -37,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('medical_certificates');
+        Schema::dropIfExists('investigations');
     }
 };

@@ -52,7 +52,6 @@ return new class extends Migration
             //Tax Configuration
             $table->string('taxes')->default(0);
             $table->string('discount')->default(0);
-            $table->string('port')->nullable();
             
             //Status
             $table->unsignedBigInteger('status')->default(0);

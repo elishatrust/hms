@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->string('email')->unique();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->string('company')->nullable();
+            $table->string('product')->nullable();
+            $table->text('description')->nullable();
+            //Status
+            $table->unsignedBigInteger('status')->default(0);
+            $table->unsignedBigInteger('archive')->default(0);
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade'); 
             $table->timestamps();
         });
     }

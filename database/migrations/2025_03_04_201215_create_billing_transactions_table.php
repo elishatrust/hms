@@ -1,10 +1,10 @@
 <?php
 
-use App\Models\RoomType;
-use App\Models\Ward;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\DoctorOrder;
+use App\Models\BillingInvoce;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -13,18 +13,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rooms', function (Blueprint $table) {
+        Schema::create('billing_transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('room_no')->nullable();
-            $table->string('name')->nullable();
-            $table->integer('price')->default(0);
-            $table->integer('capacity')->default(0);
-            $table->string('image')->nullable();
+            $table->Integer('payment_amount')->default(0);
+            $table->tinyInteger('mood')->default(0);
+            $table->foreignIdFor(DoctorOrder::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(BillingInvoce::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
+            
             //Status
             $table->unsignedBigInteger('status')->default(0);
             $table->unsignedBigInteger('archive')->default(0);
-            $table->foreignIdFor(Ward::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignIdFor(RoomType::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade'); 
             $table->timestamps();
@@ -36,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rooms');
+        Schema::dropIfExists('billing_transactions');
     }
 };

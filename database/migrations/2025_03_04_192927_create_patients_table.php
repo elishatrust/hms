@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
 
 return new class extends Migration
 {
@@ -42,12 +43,18 @@ return new class extends Migration
             $table->string('mother_phone')->nullable();
             $table->string('mother_address')->nullable();
 
+            $table->tinyInteger('same_patient')->default(0);
             $table->string('next_of_kin_phone')->nullable();
             $table->string('next_of_kin_email')->nullable();
             $table->string('next_of_kin_address')->nullable();
 
+            // Payment Methods
+            $table->string('payment_method')->default(1)->comment('1=Cash, 2=Card');
+
+            $table->text('symptoms')->nullable();
+            $table->string('image')->nullable();
+
             $table->foreignIdFor(User::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignIdFor(Specialist::class)->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
 
             //Status
             $table->unsignedBigInteger('status')->default(0);

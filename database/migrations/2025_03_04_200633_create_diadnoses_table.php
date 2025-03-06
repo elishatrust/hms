@@ -11,8 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('diadnoses', function (Blueprint $table) {
+        Schema::create('diagnoses', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->string('icd_10')->nullable();
+
+            //Status
+            $table->unsignedBigInteger('status')->default(0);
+            $table->unsignedBigInteger('archive')->default(0);
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade'); 
+            
             $table->timestamps();
         });
     }

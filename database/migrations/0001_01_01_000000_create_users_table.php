@@ -26,7 +26,6 @@ return new class extends Migration
             $table->string('address_1')->nullable();
             $table->string('address_2')->nullable();
             $table->string('image')->nullable();
-            $table->string('gender')->nullable();
 
             //Status
             $table->unsignedBigInteger('status')->default(0);
